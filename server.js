@@ -17,7 +17,7 @@ mongoose.connect(process.env.DB_LINK).then(()=>{
 
 
 
-const router = require('./route')
+const router = require('./routes/Auth_Routes')
 
 app.use(express.static('Public'))
 app.use(express.urlencoded({ extended: true }))

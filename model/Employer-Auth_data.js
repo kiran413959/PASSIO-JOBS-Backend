@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 
 
-const Employerdata = new mongoose.Schema({
+const EmployerSchema = new mongoose.Schema({
 
     UserType:{
         type:String
@@ -31,6 +31,6 @@ const Employerdata = new mongoose.Schema({
 
 
 module.exports={
-    Employer:mongoose.model('Employerdata',Employerdata)
+    Employer:mongoose.model("Employerdata",EmployerSchema)
  
 }

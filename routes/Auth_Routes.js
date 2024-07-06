@@ -21,7 +21,7 @@ router
 
     .get('/signup',signupget)
 
-    .post('/signup',signuppost)
+    .post('/signup/:userType',signuppost)
 
     .get('/login',loginget)
 
@@ -43,5 +43,6 @@ router
 
 
 
+module.exports=router
 
 

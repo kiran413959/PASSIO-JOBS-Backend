@@ -2,38 +2,47 @@ const { Jobseeker } = require("../model/Jobseeker-Auth_data");
 const { Employer } =require("../model/Employer-Auth_data")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config/keys");
-const { JWT_EXPIRE } = require("../config/keys");
-const { JWT_COOKIE_EXPIRE } = require("../config/keys");
+
+
+
+
 
 module.exports = {
+
+  signupget: async(req,res)=>{
+  },
+
+  //Signup Route
   signuppost: async (req, res) => {
+
     //Getting Data from the body
-    const UserType = req.params.Usertype
-
+    let UserType = req.params.userType
     //Checking if the user type is valid or not
-    if (UserType!== "Jobseeker" && UserType!== "employer") {
-
-      return res.status(400).json({ msg: "Invalid User Type", status: false });
-    }
+    console.log(UserType);
     
-    else if(UserType == "Jobseeker"){ 
+    
+    
 
+
+    if(UserType == "Jobseeker"){ 
       const { 
-        CandidateName,
-        CandidateEmail,
-          mobile,
-          password,
-          Confirm_Password
+            CandidateName,
+            CandidateEmail,
+            mobile,
+            password,
+            Confirm_Password
       } = req.body;
 
-     //Checking if the user already exists
-   
-
+  
+    //Checking if the user already exists
     try {
+      //Checking From Candidate side
       const ExistedCandidate = await Jobseeker.findOne({CandidateEmail: CandidateEmail,});
 
+      //Checking From Employer Side
       const ExistedEmployer = await Employer.findOne({CompanyEmail:CandidateEmail})
+
+      //Putting a condition for if one of these user existed
       if (ExistedCandidate || ExistedEmployer) {
         return res.status(400).json({ msg: "User Already Exis", status: false });
       }
@@ -47,7 +56,6 @@ module.exports = {
       }
 
       //Hashing the password
-
       const salt = await bcrypt.genSalt(10);
       const hashedpassword = await bcrypt.hash(password, salt);
 
@@ -59,13 +67,17 @@ module.exports = {
         mobile: mobile,
         password: hashedpassword,
       });
+
+      //Saving new user Details
       await jobseeker.save();
+      console.log(jobseeker);
       res.status(200).json({ msg: "User Created Successfully", status: true });
-    } catch (err) {
+    } 
+    catch (err) {
       console.log(err);
     }
   }
-  else if(UserType == "employer"){
+  else if(UserType == "Employer"){
 
     const { 
       CompanyName,
@@ -100,10 +112,19 @@ module.exports = {
         password: hashedpassword,
       });
       await employer.save();
+
+        console.log(employer);
       res.status(200).json({ msg: "User Created Successfully", status: true });
     } catch (err) {
       console.log(err);
     }
+  }else{
+
+    if (UserType!== 'Jobseeker' ||  'Employer') {
+      
+      return res.status(400).json({ msg: "Invalid User Type", status: false });
+    }
+
   }
 
 
@@ -111,6 +132,14 @@ module.exports = {
   },
 
   //Login Route
+
+
+
+  loginget: async(req,res)=>{
+
+  },
+
+
 
 
   loginpost: async(req,res)=>{
@@ -180,7 +209,27 @@ module.exports = {
   },
 
 
+  homeget: async(req,res)=>{
 
+  },
+  resume_selectionget: async(req,res)=>{
+    
+  },
+  resume_selectionpost: async(req,res)=>{
+    
+  },
+  experienceget: async(req,res)=>{
+    
+  },
+  experiencepost: async(req,res)=>{
+    
+  },
+  QandAget: async(req,res)=>{
+    
+  },
+
+  QandApost: async(req,res)=>{
+  }
 
 
 }
