@@ -1,14 +1,17 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
 
 
-const userSchema = new mongoose.Schema({
 
-    UserName:{
+const Employerdata = new mongoose.Schema({
+
+    UserType:{
+        type:String
+    },
+    CompanyName:{
         type:String,
         require:true
     },
-    UserEmail:{
+    CompanyEmail:{
         type:String,
         require:true
     },
@@ -16,13 +19,18 @@ const userSchema = new mongoose.Schema({
         type:Number,
         require:true
     },
-    Password:{
+    CompanyLocation:{
+        type:String,
+        require:true
+    },
+    password:{
         type:String,
         require:true
     }
-
 })
 
+
 module.exports={
-    User:mongoose.model("UserDetails",userSchema)
+    Employer:mongoose.model('Employerdata',Employerdata)
+ 
 }
