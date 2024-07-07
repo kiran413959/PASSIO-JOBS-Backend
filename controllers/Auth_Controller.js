@@ -144,18 +144,20 @@ module.exports = {
 
   loginpost: async(req,res)=>{
 
+    console.log("start");
         //Getting Data from the body
     const {Useremail,password}=req.body;
+    console.log(req.body);
     try {
-
         //Checking the user is Employer or Candidate
 
         const Candidate = await Jobseeker.findOne({CandidateEmail:Useremail});
-        const Employer = await Employer.findOne({CompanyEmail:Useremail});
+        console.log(Candidate);
+        const Company = await Employer.findOne({CompanyEmail:Useremail});
 
         //If the user does not exist
 
-        if(!Candidate &&!Employer) {
+        if(!Candidate &&!Company) {
 
           return res.status(400).json({msg:"User does not exist",status:false});
 
@@ -177,7 +179,7 @@ module.exports = {
           const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'30d'});
           //Sending the token to the user
           res.status(200).json({msg:"Login Successfull",status:true,token:token});
-
+            console.log(token);
           
         }
         else {
@@ -186,15 +188,16 @@ module.exports = {
           //Checking the password
 
 
-        const isMatch=  bcrypt.compare(password,Employer.password);
+        const isMatch=  bcrypt.compare(password,Company.password);
         if(!isMatch) return res.status(400).json({msg:"Invalid Credentials",status:false});
 
+        
 
         
           //Creating payload for the token
           const payload={
-            id:Employer._id,
-            Useremail:Employer.CandidateEmail,
+            id:Company._id,
+            Useremail:Company.CandidateEmail,
             UserType:UserType
           };
           //Generating the token

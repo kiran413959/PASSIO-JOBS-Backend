@@ -25,7 +25,7 @@ router
 
     .get('/login',loginget)
 
-    .post('login',loginpost)
+    .post('/login',loginpost)
 
     .get('/home',homeget)
 
