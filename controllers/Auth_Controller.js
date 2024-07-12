@@ -176,7 +176,7 @@ module.exports = {
             UserType:UserType
           };
           //Generating the token
-          const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'30d'});
+          const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'24h'});
           //Sending the token to the user
           res.status(200).json({msg:"Login Successfull",status:true,token:token});
             console.log(token);
