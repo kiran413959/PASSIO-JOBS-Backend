@@ -178,7 +178,7 @@ module.exports = {
           //Generating the token
           const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'24h'});
           //Sending the token to the user
-          res.status(200).json({msg:"Login Successfull",status:true,token:token});
+          res.status(200).json({msg:"Login Successfull",status:true,token:token,UserType:payload.UserType});
             console.log(token);
           
         }
@@ -203,7 +203,7 @@ module.exports = {
           //Generating the token
           const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'30d'});
           //Sending the token to the user
-          res.status(200).json({msg:"Login Successfull",status:true,token:token});
+          res.status(200).json({msg:"Login Successfull",status:true,token:token,UserType:payload.UserType});
         }
 
       } catch (err) {
